@@ -37,34 +37,45 @@ const slideUp = keyframes`
 `;
 
 const AboutContainer = styled.div`
-  padding: 20px;
+  padding: 60px 20px;
   background-color: #f9f9f9;
   color: #333;
   display: flex;
   flex-direction: column;
   align-items: center;
-  height: 100vh;
+  min-height: 100vh;
   font-family: 'Poppins';
 
-  @media (max-width: 768px) {
-    height: auto;
-    padding: 10px;
-  }
   @media (max-width: 1024px) {
-height: 50vh;
+    padding: 40px 20px;
+    min-height: auto;
   }
+
   @media (max-width: 768px) {
-height: 130vh;
+    padding: 30px 15px;
   }
 `;
 
 const SectionTitle = styled.h2`
   font-size: 2.5em;
-  margin-bottom: 20px;
+  margin-bottom: 40px;
+  text-align: center;
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: #333;
+  }
 
   @media (max-width: 768px) {
     font-size: 2em;
-    margin-bottom: 15px;
+    margin-bottom: 30px;
   }
 `;
 
@@ -72,25 +83,39 @@ const ContentContainer = styled.div`
   display: flex;
   flex-direction: row;
   justify-content: space-between;
+  align-items: center;
   width: 100%;
+  max-width: 1200px;
+  margin: 0 auto;
+  gap: 40px;
+
+  @media (max-width: 1024px) {
+    gap: 30px;
+  }
 
   @media (max-width: 768px) {
     flex-direction: column;
-    align-items: center;
+    gap: 20px;
   }
 `;
 
 const LeftDiv = styled.div`
   display: flex;
   flex-direction: column;
-  align-items: flex-start;
+  align-items: center;
   justify-content: center;
   width: 50%;
   position: relative;
+  height: 400px;
+
+  @media (max-width: 1024px) {
+    height: 350px;
+  }
 
   @media (max-width: 768px) {
     width: 100%;
-    align-items: center;
+    height: 300px;
+    margin-bottom: 20px;
   }
 `;
 
@@ -100,48 +125,81 @@ const RightDiv = styled.div`
   align-items: flex-start;
   justify-content: center;
   width: 50%;
-  padding-left: 20px;
+  padding: 0 20px;
+
+  h3 {
+    font-size: 1.8em;
+    margin-bottom: 20px;
+    color: #222;
+  }
+
+  @media (max-width: 1024px) {
+    padding: 0 10px;
+
+    h3 {
+      font-size: 1.6em;
+      margin-bottom: 15px;
+    }
+  }
 
   @media (max-width: 768px) {
     width: 100%;
-    padding-left: 0;
     align-items: center;
     text-align: center;
+    padding: 0;
+
+    h3 {
+      font-size: 1.4em;
+    }
   }
 `;
 
 const Card = styled.div<{ animate: boolean }>`
-  background-color: rgba(255, 255, 255, 0.8);
-  color: #333;
-  padding: 0;
-  margin-bottom: 10px;
-  border-radius: 8px;
-  box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  position: absolute;
-  top: 0;
-  left: 0;
-  z-index: 100;
+  width: 100%;
+  max-width: 400px;
+  height: 100%;
+  border-radius: 15px;
   overflow: hidden;
+  box-shadow: 0 10px 20px rgba(0, 0, 0, 0.1);
+  position: relative;
   animation: ${({ animate }) => (animate ? slideIn : 'none')} 1s ease-in-out;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.02);
+  }
 
   @media (max-width: 768px) {
-    position: static;
-    width: 100%;
+    max-width: 100%;
   }
 `;
 
 const CardImage = styled.img`
   width: 100%;
-  height: auto;
-  display: block;
+  height: 100%;
+  object-fit: cover;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.1);
+  }
 `;
 
 const Paragraph = styled.p<{ animate: boolean }>`
-  transition: opacity 0.5s ease-in-out;
-  opacity: 1;
+  font-size: 1.1em;
+  line-height: 1.6;
+  margin-bottom: 15px;
+  color: #666;
   animation: ${({ animate }) => (animate ? slideUp : 'none')} 1s ease-in-out;
+  transition: opacity 0.3s ease;
+
+  @media (max-width: 1024px) {
+    font-size: 1em;
+    margin-bottom: 12px;
+  }
 
   @media (max-width: 768px) {
+    font-size: 0.95em;
     text-align: center;
   }
 `;

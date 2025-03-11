@@ -11,7 +11,7 @@ const HeroContainer = styled.div<{ backgroundImage: string }>`
   align-items: center;
   justify-content: space-between;
   gap: 500px;
-  height: 100vh;
+  min-height: 100vh;
   background-image: url(${props => props.backgroundImage});
   background-size: cover;
   background-position: center;
@@ -20,11 +20,19 @@ const HeroContainer = styled.div<{ backgroundImage: string }>`
   padding: 20px;
   font-family: 'Poppins';
 
+  @media (max-width: 1280px) {
+    gap: 300px;
+  }
+
   @media (max-width: 1024px) {
     flex-direction: column;
-    gap: 20px;
-    height: auto;
-    padding: 10px;
+    gap: 40px;
+    padding: 60px 20px;
+  }
+
+  @media (max-width: 768px) {
+    padding: 40px 15px;
+    min-height: auto;
   }
 `;
 
@@ -36,12 +44,20 @@ const LeftDiv = styled.div`
   text-align: left;
   width: 50%;
   margin-left: 50px;
+  background-color: rgba(0, 0, 0, 0.6);
+  padding: 20px;
+  border-radius: 10px;
 
   @media (max-width: 1024px) {
-    width: 100%;
+    width: 80%;
     margin-left: 0;
     align-items: center;
     text-align: center;
+  }
+
+  @media (max-width: 768px) {
+    width: 100%;
+    padding: 15px;
   }
 `;
 
@@ -53,25 +69,41 @@ const RightDiv = styled.div`
   position: relative;
 
   @media (max-width: 1024px) {
+    width: 80%;
+  }
+
+  @media (max-width: 768px) {
     width: 100%;
   }
 `;
 
 const Title = styled.h1`
-  font-size: 3em;
-  margin-bottom: 10px;
+  font-size: 3.5em;
+  margin-bottom: 20px;
+  text-shadow: 2px 2px 4px rgba(0, 0, 0, 0.5);
 
   @media (max-width: 1024px) {
+    font-size: 2.8em;
+  }
+
+  @media (max-width: 768px) {
     font-size: 2em;
+    margin-bottom: 15px;
   }
 `;
 
 const Subtitle = styled.p`
-  font-size: 1.5em;
-  margin-bottom: 20px;
+  font-size: 1.8em;
+  margin-bottom: 30px;
+  text-shadow: 1px 1px 3px rgba(0, 0, 0, 0.5);
 
   @media (max-width: 1024px) {
+    font-size: 1.5em;
+  }
+
+  @media (max-width: 768px) {
     font-size: 1.2em;
+    margin-bottom: 20px;
   }
 `;
 
@@ -95,8 +127,8 @@ const Button = styled.button`
 `;
 
 const CircularScroll = styled.div`
-  width: 200px;
-  height: 200px;
+  width: 250px;
+  height: 250px;
   border: 5px solid white;
   border-radius: 50%;
   display: flex;
@@ -104,22 +136,35 @@ const CircularScroll = styled.div`
   justify-content: center;
   overflow: hidden;
   position: relative;
+  box-shadow: 0 0 20px rgba(0, 0, 0, 0.3);
 
   @media (max-width: 1024px) {
+    width: 200px;
+    height: 200px;
+  }
+
+  @media (max-width: 768px) {
     width: 150px;
     height: 150px;
+    border-width: 3px;
   }
 `;
 
 const CenterImage = styled.img`
-  width: 100px;
-  height: 100px;
+  width: 150px;
+  height: 150px;
   border-radius: 50%;
   margin-right: 10px;
+  object-fit: cover;
 
   @media (max-width: 1024px) {
-    width: 75px;
-    height: 75px;
+    width: 120px;
+    height: 120px;
+  }
+
+  @media (max-width: 768px) {
+    width: 90px;
+    height: 90px;
   }
 `;
 
@@ -127,45 +172,57 @@ const ArrowButton = styled.button`
   position: absolute;
   top: 50%;
   transform: translateY(-50%);
-  background-color: rgba(0, 0, 0, 0.5);
+  background-color: rgba(0, 0, 0, 0.7);
   color: white;
   border: none;
-  padding: 10px;
+  padding: 15px;
   cursor: pointer;
+  border-radius: 50%;
+  width: 40px;
+  height: 40px;
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  transition: all 0.3s ease;
 
   &:hover {
-    background-color: rgba(0, 0, 0, 0.7);
+    background-color: rgba(0, 0, 0, 0.9);
   }
 
-  @media (max-width: 1024px) {
-    padding: 8px;
+  @media (max-width: 768px) {
+    padding: 10px;
+    width: 30px;
+    height: 30px;
   }
 `;
 
 const LeftArrow = styled(ArrowButton)`
-  left: 60px;
+  left: 20px;
 
-  @media (max-width: 1024px) {
-    left: 20px;
+  @media (max-width: 768px) {
+    left: 10px;
   }
 `;
 
 const RightArrow = styled(ArrowButton)`
-  right: 60px;
+  right: 20px;
 
-  @media (max-width: 1024px) {
-    right: 20px;
+  @media (max-width: 768px) {
+    right: 10px;
   }
 `;
 
 const Pagination = styled.div`
   position: absolute;
-  bottom: -30px;
+  bottom: -40px;
   display: flex;
-  gap: 5px;
+  gap: 10px;
+  justify-content: center;
+  width: 100%;
 
-  @media (max-width: 1024px) {
-    bottom: -20px;
+  @media (max-width: 768px) {
+    bottom: -30px;
+    gap: 8px;
   }
 `;
 

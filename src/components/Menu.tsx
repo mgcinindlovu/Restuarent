@@ -28,47 +28,137 @@ import Drinks3 from '../assets/Tea & Coffee.jpg'; // Replace with actual image p
 import Drinks4 from '../assets/Alcoholic drinks.avif'; // Replace with actual image paths
 import Drinks5 from '../assets/cocktails.avif'; // Replace with actual image paths
 
+const Overlay = styled.div<{ show: boolean }>`
+  display: none;
+  
+  @media (max-width: 768px) {
+    display: ${({ show }) => (show ? 'block' : 'none')};
+    position: fixed;
+    top: 0;
+    left: 0;
+    right: 0;
+    bottom: 0;
+    background-color: rgba(0, 0, 0, 0.5);
+    z-index: 998;
+  }
+`;
+
 const MenuContainer = styled.div`
-  padding: 10px;
+  padding: 60px 20px;
   background-color: #fff;
   color: #333;
-  height: 100vh;
+  min-height: 100vh;
   font-family: 'Poppins';
+  position: relative;
 
   @media (max-width: 1024px) {
-height: 50vh;
+    padding: 40px 20px;
   }
 
   @media (max-width: 768px) {
-height: 100vh;
+    padding: 30px 15px;
   }
 `;
 
 const Title = styled.h2`
-  font-size: 1em;
-  margin-bottom: 10px;
-  margin-left: 20px;
+  font-size: 2.5em;
+  margin-bottom: 30px;
+  text-align: center;
+  position: relative;
+
+  &:after {
+    content: '';
+    position: absolute;
+    bottom: -10px;
+    left: 50%;
+    transform: translateX(-50%);
+    width: 60px;
+    height: 3px;
+    background-color: #333;
+  }
+
+  @media (max-width: 768px) {
+    font-size: 2em;
+    margin-bottom: 20px;
+  }
 `;
 
 const MenuItem = styled.div`
   background-color: #f9f9f9;
-  border-radius: 8px;
+  border-radius: 12px;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
-  padding: 10px;
+  padding: 20px;
   text-align: center;
+  margin: 15px;
+  transition: all 0.3s ease;
+
+  &:hover {
+    transform: translateY(-5px);
+    box-shadow: 0 6px 12px rgba(0, 0, 0, 0.15);
+  }
+
+  h3 {
+    margin: 15px 0;
+    font-size: 1.3em;
+    color: #222;
+
+    @media (max-width: 768px) {
+      font-size: 1.1em;
+      margin: 10px 0;
+    }
+  }
+
+  p {
+    margin: 10px 0;
+    font-size: 1em;
+    color: #666;
+    line-height: 1.4;
+
+    &:last-of-type {
+      font-weight: bold;
+      color: #000;
+      font-size: 1.2em;
+      margin-top: 15px;
+    }
+
+    @media (max-width: 768px) {
+      font-size: 0.9em;
+      margin: 8px 0;
+      
+      &:last-of-type {
+        font-size: 1.1em;
+        margin-top: 12px;
+      }
+    }
+  }
+
+  @media (max-width: 768px) {
+    padding: 15px;
+    margin: 10px;
+  }
 `;
 
 const MenuImage = styled.img`
   width: 100%;
-  height: auto;
+  height: 200px;
+  object-fit: cover;
   border-radius: 8px;
   margin-bottom: 10px;
+  transition: transform 0.3s ease;
+
+  &:hover {
+    transform: scale(1.05);
+  }
+
+  @media (max-width: 768px) {
+    height: 150px;
+  }
 `;
 
 const Button = styled.button`
-  margin-top: 20px;
+  margin-top: 15px;
   margin-left: 20px;
-  padding: 10px 20px;
+  padding: 12px 24px;
   font-size: 1em;
   color: #fff;
   background-color: #000000;
@@ -76,8 +166,26 @@ const Button = styled.button`
   border-radius: 5px;
   cursor: pointer;
   position: relative;
+  transition: all 0.3s ease;
+  display: flex;
+  align-items: center;
+  gap: 8px;
+  
   &:hover {
-    background-color: #0000008b;
+    background-color: #333;
+    transform: translateY(-2px);
+  }
+
+  &:active {
+    transform: translateY(0);
+  }
+
+  @media (max-width: 768px) {
+    margin: 10px auto;
+    padding: 10px 20px;
+    font-size: 0.9em;
+    width: 80%;
+    justify-content: center;
   }
 `;
 
@@ -95,14 +203,39 @@ const DropdownMenu = styled.div.attrs<{ show: boolean }>(({ show }) => ({
   border-radius: 5px;
   overflow: hidden;
   z-index: 1000;
+  min-width: 200px;
+
+  @media (max-width: 768px) {
+    width: 100%;
+    position: fixed;
+    left: 0;
+    right: 0;
+    border-radius: 0;
+    top: auto;
+    bottom: 0;
+    max-height: 50vh;
+    overflow-y: auto;
+  }
 `;
 
 const DropdownItem = styled.div`
-  padding: 10px 20px;
+  padding: 15px 20px;
   cursor: pointer;
+  transition: all 0.3s ease;
+  
   &:hover {
     color: white;
     background-color: #000000;
+  }
+
+  @media (max-width: 768px) {
+    padding: 20px;
+    text-align: center;
+    border-bottom: 1px solid #eee;
+    
+    &:last-child {
+      border-bottom: none;
+    }
   }
 `;
 
@@ -162,14 +295,16 @@ function Menu() {
       <Title>Our Menu</Title>
       <Button onClick={toggleDropdown}>
         Food categories
-        <DropdownMenu show={showDropdown}>
-          {Object.keys(categories).map((category) => (
-            <DropdownItem key={category} onClick={() => handleCategoryChange(category as keyof typeof categories)}>
-              {category}
-            </DropdownItem>
-          ))}
-        </DropdownMenu>
+        <span>{showDropdown ? '▼' : '▲'}</span>
       </Button>
+      <Overlay show={showDropdown} onClick={() => setShowDropdown(false)} />
+      <DropdownMenu show={showDropdown}>
+        {Object.keys(categories).map((category) => (
+          <DropdownItem key={category} onClick={() => handleCategoryChange(category as keyof typeof categories)}>
+            {category}
+          </DropdownItem>
+        ))}
+      </DropdownMenu>
       <Swiper
         spaceBetween={10}
         slidesPerView={1}
@@ -177,15 +312,23 @@ function Menu() {
         navigation
         modules={[Pagination, Navigation]}
         breakpoints={{
+          480: {
+            slidesPerView: 1,
+            spaceBetween: 10,
+          },
           640: {
+            slidesPerView: 2,
+            spaceBetween: 15,
+          },
+          768: {
             slidesPerView: 2,
             spaceBetween: 20,
           },
-          768: {
+          1024: {
             slidesPerView: 3,
             spaceBetween: 30,
           },
-          1024: {
+          1280: {
             slidesPerView: 4,
             spaceBetween: 40,
           },
@@ -198,7 +341,7 @@ function Menu() {
               <h3>{item.title}</h3>
               <p>{item.description}</p>
               <p>{item.price}</p>
-              <Button>Order</Button>
+              <Button>Order Now</Button>
             </MenuItem>
           </SwiperSlide>
         ))}
